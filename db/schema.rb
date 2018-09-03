@@ -10,15 +10,26 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_09_03_100535) do
+ActiveRecord::Schema.define(version: 2018_09_03_124700) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
   enable_extension "uuid-ossp"
 
+  create_table "house_users", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "user_id"
+    t.boolean "is_admin"
+    t.boolean "active"
+    t.uuid "house_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["house_id"], name: "index_house_users_on_house_id"
+    t.index ["user_id"], name: "index_house_users_on_user_id"
+  end
+
   create_table "houses", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
-    t.string "type"
+    t.string "house_type"
     t.string "profile_pic"
     t.string "address"
     t.string "state"
@@ -28,6 +39,7 @@ ActiveRecord::Schema.define(version: 2018_09_03_100535) do
     t.string "join_code"
     t.datetime "code_expiry_date"
     t.text "bio"
+    t.decimal "rent"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -85,6 +97,8 @@ ActiveRecord::Schema.define(version: 2018_09_03_100535) do
     t.index ["username", "email"], name: "index_users_on_username_and_email", unique: true
   end
 
+  add_foreign_key "house_users", "houses"
+  add_foreign_key "house_users", "users"
   add_foreign_key "mate_profiles", "users"
   add_foreign_key "user_pets", "users"
 end

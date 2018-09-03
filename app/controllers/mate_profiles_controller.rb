@@ -1,5 +1,7 @@
+# frozen_string_literal: true
+
 class MateProfilesController < ApplicationController
-  before_action :set_mate_profile, only: [:show, :update, :destroy]
+  before_action :set_mate_profile, only: %i[show update destroy]
 
   def show
     render json: @mate_profile
@@ -24,14 +26,14 @@ class MateProfilesController < ApplicationController
   end
 
   private
+
   def set_mate_profile
     @mate_profile = MateProfile.find(params[:id])
   end
 
   def mate_profile_params
     params.require(:mate_profile).permit(
-        :marital_status, :job, :user_id, :is_smoker, :faith, :personality
+      :marital_status, :job, :user_id, :is_smoker, :faith, :personality
     )
   end
 end
-  

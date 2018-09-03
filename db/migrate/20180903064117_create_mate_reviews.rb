@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class CreateMateReviews < ActiveRecord::Migration[5.2]
   def change
     create_table :mate_reviews do |t|

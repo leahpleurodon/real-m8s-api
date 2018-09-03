@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class CreateMateProfiles < ActiveRecord::Migration[5.2]
   def change
     create_table :mate_profiles, id: :uuid do |t|
