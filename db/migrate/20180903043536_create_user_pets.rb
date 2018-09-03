@@ -1,6 +1,6 @@
 class CreateUserPets < ActiveRecord::Migration[5.2]
   def change
-    create_table :user_pets do |t|
+    create_table :user_pets, id: :uuid do |t|
       t.string :name
       t.string :species
       t.string :size
@@ -10,6 +10,7 @@ class CreateUserPets < ActiveRecord::Migration[5.2]
       t.string :profile_pic
       t.boolean :active
       t.text :bio
+      t.references :user, foreign_key: true
 
       t.timestamps
     end

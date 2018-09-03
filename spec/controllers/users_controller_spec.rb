@@ -1,25 +1,25 @@
 
 RSpec.describe UsersController, type: :controller do
   let(:valid_attributes) {
-    {
-      first_name: "leah" ,
-      last_name: "eramo" ,
-      gender: "female",
-      username: "leahpleurodon",
-      dob: "13/03/1991",
-      active: true,
-      email: "boogers@email.com",
-      password: "pudding"
-    }
+  {
+    first_name: "leah" ,
+    last_name: "eramo" ,
+    gender: "female",
+    username: "leahpleurodon",
+    dob: "13/03/1991",
+    active: true,
+    email: "ohai@email.com",
+    password: "pudding"
   }
+}
 
-  let(:invalid_attributes) {
-    {
-      username: nil,
-      email: nil,
-      password: nil
-    }
+let(:invalid_attributes) {
+  {
+    username: nil,
+    email: nil,
+    password: nil
   }
+}
 
   # This should return the minimal set of values that should be in the session
   # in order to pass any filters (e.g. authentication) defined in
@@ -79,7 +79,7 @@ RSpec.describe UsersController, type: :controller do
           username: "rachy",
           dob: "12/09/1990",
           active: false,
-          email: "schmooey@email.com",
+          email: "suppp@email.com",
           password: "pudding"
         }
       }
@@ -90,7 +90,7 @@ RSpec.describe UsersController, type: :controller do
         user.reload
         expect(user.first_name).to eq('rachel')
         expect(user.last_name).to eq('ferretto')
-        expect(user.email).to eq('schmooey@email.com')
+        expect(user.email).to eq('suppp@email.com')
         expect(user.active).to be false
       end
 

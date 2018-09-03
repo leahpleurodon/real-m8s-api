@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_09_03_042632) do
+ActiveRecord::Schema.define(version: 2018_09_03_043536) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -20,7 +20,7 @@ ActiveRecord::Schema.define(version: 2018_09_03_042632) do
   create_table "mate_profiles", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "marital_status"
     t.string "job"
-    t.bigint "user_id"
+    t.uuid "user_id"
     t.boolean "is_smoker"
     t.string "faith"
     t.string "personality"
@@ -29,7 +29,7 @@ ActiveRecord::Schema.define(version: 2018_09_03_042632) do
     t.index ["user_id"], name: "index_mate_profiles_on_user_id"
   end
 
-  create_table "user_pets", force: :cascade do |t|
+  create_table "user_pets", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "name"
     t.string "species"
     t.string "size"
@@ -39,11 +39,13 @@ ActiveRecord::Schema.define(version: 2018_09_03_042632) do
     t.string "profile_pic"
     t.boolean "active"
     t.text "bio"
+    t.uuid "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_user_pets_on_user_id"
   end
 
-  create_table "users", force: :cascade do |t|
+  create_table "users", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "first_name"
     t.string "last_name"
     t.string "gender"
@@ -59,4 +61,5 @@ ActiveRecord::Schema.define(version: 2018_09_03_042632) do
   end
 
   add_foreign_key "mate_profiles", "users"
+  add_foreign_key "user_pets", "users"
 end
