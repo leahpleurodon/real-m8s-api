@@ -1,10 +1,6 @@
 require 'rails_helper'
 
 RSpec.describe UsersController, type: :controller do
-
-  # This should return the minimal set of attributes required to create a valid
-  # User. As you add validations to User, be sure to
-  # adjust the attributes here as well.
   let(:valid_attributes) {
     {
       first_name: "leah" ,
@@ -20,12 +16,7 @@ RSpec.describe UsersController, type: :controller do
 
   let(:invalid_attributes) {
     {
-      first_name: 123 ,
-      last_name: 456 ,
-      gender: 789,
       username: nil,
-      dob: 765,
-      active: 123,
       email: nil,
       password: nil
     }

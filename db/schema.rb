@@ -10,12 +10,24 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_09_02_112048) do
+ActiveRecord::Schema.define(version: 2018_09_02_234930) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
   enable_extension "uuid-ossp"
+
+  create_table "mate_profiles", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.string "marital_status"
+    t.string "job"
+    t.bigint "user_id"
+    t.boolean "is_smoker"
+    t.string "faith"
+    t.string "personality"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_mate_profiles_on_user_id"
+  end
 
   create_table "users", force: :cascade do |t|
     t.string "first_name"
@@ -32,4 +44,5 @@ ActiveRecord::Schema.define(version: 2018_09_02_112048) do
     t.index ["username", "email"], name: "index_users_on_username_and_email", unique: true
   end
 
+  add_foreign_key "mate_profiles", "users"
 end
