@@ -13,7 +13,7 @@ RSpec.describe MateProfilesController, type: :controller do
   
   describe "PUT #update" do
     context "with valid params" do
-      it "updates the requested user" do
+      it "updates the requested mate profile" do
         
         mate_profile = create(:mate_profile)
         put :update, params: {id: mate_profile.to_param, mate_profile: {job: "Web Developer"}}, session: valid_session

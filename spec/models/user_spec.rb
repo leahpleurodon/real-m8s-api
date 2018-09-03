@@ -1,4 +1,3 @@
-
 RSpec.describe User, type: :model do
   describe "#full_name" do
     it 'returns a full name' do

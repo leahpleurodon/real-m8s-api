@@ -56,7 +56,7 @@ RSpec.describe UserPetsController, type: :controller do
         end
 
         context "with invalid params" do
-            it "renders a JSON response with errors for the new user" do
+            it "renders a JSON response with errors for the new user pet" do
             post :create, params: {user_pet: invalid_attributes}, session: valid_session
             expect(response).to have_http_status(:unprocessable_entity)
             expect(response.content_type).to eq('application/json')
@@ -66,14 +66,14 @@ RSpec.describe UserPetsController, type: :controller do
 
     describe "PUT #update" do
         context "with valid params" do
-            it "updates the requested user" do
+            it "updates the requested user pet" do
                 user_pet = create(:user_pet)
                 put :update, params: {id: user_pet.to_param, user_pet: {name: "Arnie"}}, session: valid_session
                 user_pet.reload
                 expect(user_pet.name).to eq('Arnie')
             end
 
-            it "renders a JSON response with the mate_profile" do
+            it "renders a JSON response with the user pet" do
                 user_pet = create(:user_pet)
                 put :update, params: {id: user_pet.to_param, user_pet: {
                 species: "cat",

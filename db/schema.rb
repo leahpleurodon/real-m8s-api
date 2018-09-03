@@ -10,12 +10,27 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_09_03_043536) do
+ActiveRecord::Schema.define(version: 2018_09_03_100535) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
   enable_extension "uuid-ossp"
+
+  create_table "houses", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.string "type"
+    t.string "profile_pic"
+    t.string "address"
+    t.string "state"
+    t.string "country"
+    t.string "rent_cycle"
+    t.datetime "rent_start_date"
+    t.string "join_code"
+    t.datetime "code_expiry_date"
+    t.text "bio"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
 
   create_table "mate_profiles", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "marital_status"
@@ -27,6 +42,16 @@ ActiveRecord::Schema.define(version: 2018_09_03_043536) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["user_id"], name: "index_mate_profiles_on_user_id"
+  end
+
+  create_table "mate_reviews", force: :cascade do |t|
+    t.decimal "rating"
+    t.text "comment"
+    t.boolean "active"
+    t.uuid "author_id"
+    t.uuid "user_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "user_pets", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|

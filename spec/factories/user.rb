@@ -9,4 +9,5 @@ FactoryBot.define do
         email { "schmooey@email.com" }
         password { "pudding" }
     end
+
 end
