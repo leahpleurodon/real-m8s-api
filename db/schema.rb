@@ -10,12 +10,48 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_09_03_124700) do
+ActiveRecord::Schema.define(version: 2018_09_04_004102) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
   enable_extension "uuid-ossp"
+
+  create_table "bill_images", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.string "image"
+    t.boolean "active"
+    t.uuid "house_bill_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["house_bill_id"], name: "index_bill_images_on_house_bill_id"
+  end
+
+  create_table "bill_payments", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "user_id"
+    t.decimal "amount_due"
+    t.boolean "paid"
+    t.datetime "due_date"
+    t.boolean "active"
+    t.uuid "house_bill_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["house_bill_id"], name: "index_bill_payments_on_house_bill_id"
+    t.index ["user_id"], name: "index_bill_payments_on_user_id"
+  end
+
+  create_table "house_bills", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.string "desc"
+    t.datetime "due_date"
+    t.decimal "amount"
+    t.boolean "active"
+    t.uuid "user_id"
+    t.string "category"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.uuid "house_id"
+    t.index ["house_id"], name: "index_house_bills_on_house_id"
+    t.index ["user_id"], name: "index_house_bills_on_user_id"
+  end
 
   create_table "house_users", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.uuid "user_id"
@@ -97,6 +133,11 @@ ActiveRecord::Schema.define(version: 2018_09_03_124700) do
     t.index ["username", "email"], name: "index_users_on_username_and_email", unique: true
   end
 
+  add_foreign_key "bill_images", "house_bills"
+  add_foreign_key "bill_payments", "house_bills"
+  add_foreign_key "bill_payments", "users"
+  add_foreign_key "house_bills", "houses"
+  add_foreign_key "house_bills", "users"
   add_foreign_key "house_users", "houses"
   add_foreign_key "house_users", "users"
   add_foreign_key "mate_profiles", "users"

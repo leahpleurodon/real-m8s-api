@@ -4,6 +4,9 @@ class User < ApplicationRecord
   has_secure_password
   has_one :mate_profile
   has_many :user_pets
+  has_many :house_bills
+  has_many :house_users
+  has_many :houses, :through => :house_users
   has_many :received_reviews,
            class_name: 'MateReview',
            foreign_key: 'user_id'
