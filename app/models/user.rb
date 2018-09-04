@@ -14,8 +14,10 @@ class User < ApplicationRecord
            class_name: 'MateReview',
            foreign_key: 'author_id'
 
-  validates_presence_of :password, :email, :username
-  # validates_presence_of :mate_profile
+  validates_presence_of :password_digest, :email, :username
+  
+  mount_uploader :profile_pic, ProfilePicUploader
+  
   def full_name
     "#{first_name} #{last_name}"
   end
